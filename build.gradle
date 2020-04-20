@@ -1,12 +1,49 @@
-plugins {
-    id 'java'
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
 }
 
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
 group 'org.picstories.library'
-version '1.0-SNAPSHOT'
+version '2.0-SNAPSHOT'
 
 repositories {
+    mavenLocal()
     mavenCentral()
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
+publishing {
+    repositories {
+        maven {
+            url=localProperties['myMavenRepoUrl']
+            credentials {
+                username=localProperties['myMavenRepoLogin']
+                password=localProperties['myMavenRepoPassword']
+            }
+        }
+    }
+
+    publications {
+        maven(MavenPublication) {
+            from components.java
+
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
 }
 
 dependencies {
