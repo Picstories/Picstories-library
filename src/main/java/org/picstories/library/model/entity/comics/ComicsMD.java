@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author arman.shamenov
  */
 @NoArgsConstructor
-@Document(collation = "comics")
+@Document(collection = "comics")
 public class ComicsMD extends Comics {
 
     public ComicsMD(Comics comic) {
