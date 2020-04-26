@@ -4,6 +4,8 @@ import com.mongodb.ConnectionString;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
 import org.jetbrains.annotations.NotNull;
+import org.picstories.library.repository.mongo.ComicsMongoRepository;
+import org.picstories.library.repository.mongo.PageMongoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +19,7 @@ import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.convert.NoOpDbRefResolver;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,10 @@ import java.util.List;
  * @author arman.shamenov
  */
 @Configuration
+@EnableReactiveMongoRepositories(basePackageClasses = {
+        ComicsMongoRepository.class,
+        PageMongoRepository.class
+})
 public class ReactiveMongoDbConfiguration extends AbstractReactiveMongoConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ReactiveMongoDbConfiguration.class);
 
