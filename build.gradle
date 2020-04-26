@@ -10,7 +10,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 group 'org.picstories.library'
-version '2.0-SNAPSHOT'
+version '3.0-SNAPSHOT'
 
 repositories {
     mavenLocal()
@@ -53,7 +53,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb-reactive', version: '2.2.5.RELEASE'
     implementation group: 'com.google.guava', name: 'guava', version: '28.0-jre'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.3'
-    implementation group: 'org.projectlombok', name: 'lombok', version:  '1.18.12'
+    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
     implementation group: 'org.jetbrains', name: 'annotations', version: '19.0.0'
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
@@ -63,7 +63,7 @@ dependencies {
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.5.RELEASE'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.4'
     testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
-    testImplementation group: 'org.projectlombok', name: 'lombok', version:  '1.18.12'
+    testImplementation group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
