@@ -2,6 +2,8 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
+        maven { url "http://repo.spring.io/libs-milestone" }
+        maven { url "http://repo.spring.io/libs-snapshot" }
     }
 }
 
@@ -10,11 +12,14 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 group 'org.picstories.library'
-version '3.1-SNAPSHOT'
+version '3.2-SNAPSHOT'
 
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
+    maven { url "http://repo.spring.io/libs-milestone" }
 }
 
 task sourceJar(type: Jar) {
@@ -49,12 +54,13 @@ publishing {
 dependencies {
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.2'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: '2.2.2.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: '2.2.5.RELEASE'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb-reactive', version: '2.2.5.RELEASE'
     implementation group: 'com.google.guava', name: 'guava', version: '28.0-jre'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.3'
     implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
     implementation group: 'org.jetbrains', name: 'annotations', version: '19.0.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.2.5.RELEASE'
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
