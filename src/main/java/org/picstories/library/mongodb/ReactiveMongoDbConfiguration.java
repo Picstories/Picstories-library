@@ -28,19 +28,17 @@ import java.util.List;
 public class ReactiveMongoDbConfiguration extends AbstractReactiveMongoConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ReactiveMongoDbConfiguration.class);
 
-    @Value("${spring.data.mongodb.database}")
-    private String databaseName;
-    @Value("${spring.data.mongodb.uri}")
-    private String uri;
-
     private final MongoClient client;
+    private final String databaseName;
 
-    public ReactiveMongoDbConfiguration() {
+    public ReactiveMongoDbConfiguration(@Value("${spring.data.mongodb.database}") String databaseName,
+                                        @Value("${spring.data.mongodb.uri}") String uri) {
         ConnectionString connectionString = new ConnectionString(uri);
         logger.info("Uri to connect to mongo = {}", uri);
         logger.info("Connection string to mongo  = {} ", connectionString);
         logger.info("Database name = {}", databaseName);
         client = MongoClients.create(connectionString);
+        this.databaseName = databaseName;
     }
 
     @Override
@@ -49,7 +47,7 @@ public class ReactiveMongoDbConfiguration extends AbstractReactiveMongoConfigura
     }
 
     @Override
-    protected  @NotNull String getDatabaseName() {
+    protected @NotNull String getDatabaseName() {
         return databaseName;
     }
 
