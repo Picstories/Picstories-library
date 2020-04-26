@@ -21,10 +21,14 @@ public class LocalDateTimeDeserializer extends StdDeserializer<LocalDateTime> {
         this.formatter = formatter;
     }
 
+    public LocalDateTimeDeserializer() {
+        this(LocalDateTime.class, () -> DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
+    }
+
     // yyyy-MM-dd'T'HH:mm:ss.SSS default
 
     public LocalDateTimeDeserializer(Class<LocalDateTime> src) {
-        this(src, ()-> DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
+        this(src, () -> DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
     }
 
     @Override
