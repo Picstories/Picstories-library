@@ -1,5 +1,7 @@
 package org.picstories.library.elasticsearch;
 
+import org.picstories.library.repository.elasticsearch.ComicsElasticsearchRepository;
+import org.picstories.library.repository.elasticsearch.PageElasticsearchRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,28 +11,34 @@ import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.reactive.ReactiveElasticsearchClient;
 import org.springframework.data.elasticsearch.client.reactive.ReactiveRestClients;
 import org.springframework.data.elasticsearch.config.AbstractReactiveElasticsearchConfiguration;
+import org.springframework.data.elasticsearch.repository.config.EnableReactiveElasticsearchRepositories;
 
-import java.util.List;
+import java.net.InetSocketAddress;
 
 /**
  * @author arman.shamenov
  */
 @Configuration
+@EnableReactiveElasticsearchRepositories(basePackageClasses = {
+        ComicsElasticsearchRepository.class,
+        PageElasticsearchRepository.class
+})
 public class ReactiveElasticsearchConfiguration extends AbstractReactiveElasticsearchConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(ReactiveElasticsearchConfiguration.class);
 
-    @Value("${spring.elasticsearch.rest.uris}")
-    private List<String> elasticsearchUris;
+    @Value("${spring.elasticsearch.jest.proxy.host}")
+    private String hostname;
+    @Value("${spring.elasticsearch.jest.proxy.port}")
+    private Integer port;
 
     @Override
     @Bean
     public ReactiveElasticsearchClient reactiveElasticsearchClient() {
-        logger.info("Rest elasticsearch uris = {}", elasticsearchUris.toString());
+        logger.info("Elasticsearch connect to host = {} and port = {}", hostname, port);
+        InetSocketAddress address = new InetSocketAddress(hostname, port);
         ClientConfiguration clientConfiguration = ClientConfiguration
-                .builder()
-                .connectedTo(elasticsearchUris.toArray(String[]::new))
-                .build();
+                .create(address);
 
         return ReactiveRestClients.create(clientConfiguration);
     }

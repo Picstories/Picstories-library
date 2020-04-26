@@ -1,4 +1,4 @@
-package org.picstories.library.repository;
+package org.picstories.library.repository.mongo;
 
 import org.picstories.library.model.entity.comics.ComicsMD;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
