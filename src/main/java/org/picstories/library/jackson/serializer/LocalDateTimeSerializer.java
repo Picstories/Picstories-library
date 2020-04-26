@@ -26,6 +26,10 @@ public class LocalDateTimeSerializer extends StdSerializer<LocalDateTime> {
         this.formatter = formatter;
     }
 
+    public LocalDateTimeSerializer() {
+        this(LocalDateTime.class, ()-> DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
+    }
+
     @Override
     public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeString(value.format(formatter.get()));
