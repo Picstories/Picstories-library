@@ -4,6 +4,8 @@ import com.mongodb.ConnectionString;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -24,14 +26,20 @@ import java.util.List;
  */
 @Configuration
 public class ReactiveMongoDbConfiguration extends AbstractReactiveMongoConfiguration {
+    private static final Logger logger = LoggerFactory.getLogger(ReactiveMongoDbConfiguration.class);
 
-    @Value("${spring.data.mongodb.database}")
-    private String databaseName;
-    @Value("${spring.data.mongodb.uri}")
-    private String uri;
+    private final MongoClient client;
+    private final String databaseName;
 
-    private final ConnectionString connectionString = new ConnectionString(uri);
-    private final MongoClient client = MongoClients.create(connectionString);
+    public ReactiveMongoDbConfiguration(@Value("${spring.data.mongodb.database}") String databaseName,
+                                        @Value("${spring.data.mongodb.uri}") String uri) {
+        ConnectionString connectionString = new ConnectionString(uri);
+        logger.info("Uri to connect to mongo = {}", uri);
+        logger.info("Connection string to mongo  = {} ", connectionString);
+        logger.info("Database name = {}", databaseName);
+        client = MongoClients.create(connectionString);
+        this.databaseName = databaseName;
+    }
 
     @Override
     public @NotNull MongoClient reactiveMongoClient() {
@@ -39,7 +47,7 @@ public class ReactiveMongoDbConfiguration extends AbstractReactiveMongoConfigura
     }
 
     @Override
-    protected  @NotNull String getDatabaseName() {
+    protected @NotNull String getDatabaseName() {
         return databaseName;
     }
 
